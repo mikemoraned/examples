@@ -82,7 +82,11 @@ fn post_gcd(request: &mut Request) -> IronResult<Response> {
     response.set_mut(status::Ok);
     response.set_mut(mime!(Text/Html; Charset=Utf8));
     response.set_mut(
-        format!("The greatest common divisor of the numbers {:?} is <b>{}</b>\n",
+        format!(r"
+            <html>
+              <p>The greatest common divisor of the numbers {:?} is <b>{}</b></p>
+            </html>
+            ",
                 numbers, d));
     Ok(response)
 }
