@@ -1,6 +1,7 @@
 extern crate iron;
 #[macro_use] extern crate mime;
 
+use std::iter::Iterator;
 use iron::prelude::*;
 use iron::status;
 
@@ -74,11 +75,8 @@ fn post_gcd(request: &mut Request) -> IronResult<Response> {
         }
     }
 
-    let mut d = numbers[0];
-    for m in &numbers[1..] {
-        d = gcd(d, *m);
-    }
-
+    let d = numbers.iter().skip(1).fold(numbers[0], |acc, m| gcd(acc, *m));
+    
     response.set_mut(status::Ok);
     response.set_mut(mime!(Text/Html; Charset=Utf8));
     response.set_mut(
